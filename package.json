@@ -25,5 +25,8 @@
   },
   "jest": {
     "verbose": true
+  },
+  "dependencies": {
+    "g": "^2.0.1"
   }
 }
