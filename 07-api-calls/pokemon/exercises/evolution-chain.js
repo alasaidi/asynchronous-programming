@@ -1,5 +1,5 @@
 import { ORIGIN } from '../config.js';
-
+import fetch from 'node-fetch';
 /**
  * Returns an array of pokemon in an evolution chain.
  *
@@ -12,28 +12,33 @@ import { ORIGIN } from '../config.js';
 export const evolutionChain = async (chainId = 1) => {
     // --- generate and declare your resource's URL ---
     // docs: https://pokeapi.co/docs/v2#evolution-section
-    const URL = _;
-
+    const URL = `${ORIGIN}/evolution-chain/${chainId}`;
+    let response;
     // --- fetch the API data (this works!) ---
-    const encodedURL = encodeURI(URL);
-    const response = await fetch(encodedURL);
+    try {
+        const encodedURL = encodeURI(URL);
+        response = await fetch(encodedURL);
+        /* --- parse the data if the response was ok (this works!) ---*/
+        const data = await response.json();
 
-    // --- throw an error if the response is not ok (this works!) ---
-    if (!response.ok) {
+        // --- process the fetched data (if necessary) ---
+        //  you do not need to use `await` below this comment
+        //  you can refactor this to a separate logic function and test it
+        const pokemon = data.chain.species;
+        // .map((species) => ({
+        //     name: species.name,
+        //     url: species.url,
+        // })); // tricky one!  you will need to push all the species into an array
+        console.log(pokemon);
+        // --- return the final data ---
+        //  return pokemon;
+    } catch {
+        // --- throw an error if the response is not ok (this works!) ---
+
         const message = response.statusText
             ? `${response.status}: ${response.statusText}\n-> ${URL}`
             : `HTTP error! status: ${response.status}\n-> ${URL}`;
         throw new Error(message);
     }
-
-    /* --- parse the data if the response was ok (this works!) ---*/
-    const data = await response.json();
-
-    // --- process the fetched data (if necessary) ---
-    //  you do not need to use `await` below this comment
-    //  you can refactor this to a separate logic function and test it
-    _; // tricky one!  you will need to push all the species into an array
-
-    // --- return the final data ---
-    return pokemon;
 };
+await evolutionChain(5);
