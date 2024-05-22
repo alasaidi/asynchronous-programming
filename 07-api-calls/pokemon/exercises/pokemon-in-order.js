@@ -1,5 +1,5 @@
 import { ORIGIN } from '../config.js';
-import fetch from 'node-fetch';
+import 'whatwg-fetch';
 /**
  * Returns a selected array of pokemon in order.
  *
@@ -14,28 +14,37 @@ export const pokemonInOrder = async (limit = 10, offset = 10) => {
     // --- generate and declare your resource's URL ---
     // docs: https://pokeapi.co/docs/v2#resource-listspagination-section
     const URL = `${ORIGIN}/ability/?limit=${limit}&offset=${offset}`;
+    const encodedURL = encodeURI(URL);
     try {
         // --- fetch the API data (this works!) ---
-        const encodedURL = encodeURI(URL);
+
         const response = await fetch(encodedURL);
+        if (!response.ok) {
+            const message = response.statusText
+                ? `${response.status}: ${response.statusText}\n-> ${URL}`
+                : `HTTP error! status: ${response.status}\n-> ${URL}`;
+            throw new Error(message);
+        }
         const data = await response.json();
 
         // --- process the fetched data (if necessary) ---
         //  you do not need to use `await` below this comment
         //  you can refactor this to a separate logic function and test it
-        const pokemon = data;
+        const pokemon = list(data);
         /* --- parse the data if the response was ok (this works!) ---*/
 
         // --- return the final data ---
-        // return pokemon;
-        console.log(pokemon);
-    } catch {
-        // --- throw an error if the response is not ok (this works!) ---
-
-        const message = response.statusText
-            ? `${response.status}: ${response.statusText}\n-> ${URL}`
-            : `HTTP error! status: ${response.status}\n-> ${URL}`;
-        throw new Error(message);
+        return pokemon;
+        // console.log(pokemon);
+    } catch (err) {
+        console.error('Error:', err.message);
+        throw err;
     }
 };
-await pokemonInOrder(10, 10);
+const list = (data) => {
+    const pokemon = data.pokemon.map(({ pokemon }) => ({
+        name: pokemon.name,
+        url: pokemon.url,
+    }));
+    return pokemon;
+};
