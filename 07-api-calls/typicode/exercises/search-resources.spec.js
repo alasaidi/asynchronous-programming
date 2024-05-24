@@ -1,4 +1,4 @@
-import { searchResources } from './search-resources.js';
+import { searchResources } from './search-resources.mjs';
 
 describe('searchResources: fetches all entries from a single type that match a search', () => {
     it('should fetch all comments matching "non\naut"', async () => {
