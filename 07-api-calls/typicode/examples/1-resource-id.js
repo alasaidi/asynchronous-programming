@@ -1,5 +1,6 @@
 import { labeledLogger } from '../../../lib/labeled-logger.js';
 import { ORIGIN } from '../config.js';
+import fetch from 'node-fetch';
 
 /* Resource IDs
 
@@ -40,7 +41,8 @@ const fetchById = async (resourceType = '', id = 0) => {
     const data = await response.json();
 
     // --- return the final data ---
-    return data;
+    // return data;
+    console.log(data);
 };
 
 // --- fetch and log the data ---
