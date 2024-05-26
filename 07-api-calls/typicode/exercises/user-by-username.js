@@ -1,6 +1,6 @@
 import { ORIGIN } from '../config.js';
-// import fetch from 'node-fetch';
-import 'whatwg-fetch';
+import fetch from 'node-fetch';
+// import 'whatwg-fetch';
 
 /**
  * Fetches a single user with the given user name.
@@ -31,16 +31,16 @@ export const userByUsername = async (userName = '') => {
 
         /* --- parse the data if the response was ok (this works!) ---*/
         const data = await response.json();
-
+        // console.log(data);
         // --- process the fetched data (if necessary) ---
         //   you do not need to use `await` below this comment
-        const user = data;
+        const user = data.map((id) => id);
 
         // --- return the final data ---
-        // console.log(user);
-        return user;
+        console.log(user);
+        // return user;
     } catch (err) {
         console.error(err);
     }
 };
-// await userByUsername('Delphine');
+await userByUsername('Delphine');
