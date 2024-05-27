@@ -2,7 +2,6 @@ import { ORIGIN } from '../config.js';
 
 export const typicodeResource = async (...params) => {
     const paramsPath = params.join('/');
-    console.log(paramsPath);
     const URL = `${ORIGIN}/${paramsPath}`;
 
     const encodedURL = encodeURI(URL);
