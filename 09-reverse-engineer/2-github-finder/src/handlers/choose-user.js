@@ -9,7 +9,6 @@ export const chooseUser = async (event) => {
     const root = document.getElementById('profile');
     root.innerHTML = '';
 
-    console.log(searchValue);
     try {
         const userResponse = await githubResources(searchValue);
         renderUser(userResponse, root);

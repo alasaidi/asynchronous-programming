@@ -1,3 +1,3 @@
-import { fetchWiki } from './listeners/fetchWiki.js';
+import { fetchWiki } from './listeners/fetch-wiki.js';
 
 fetchWiki('submit-btn');

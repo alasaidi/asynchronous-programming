@@ -1,8 +1,5 @@
 import { typicodeResource } from '../api-calls/typicode-resource.js';
-// import { state } from '../components/data.js';
 import { renderPost } from '../components/render-post.js';
-// import { fourOhFour } from '../components/four-oh-four.js';
-// import { otherError } from '../components/other-error.js';
 
 export const choosePost = async (event) => {
     const postId = event.target.form.postId.value;
@@ -18,19 +15,11 @@ export const choosePost = async (event) => {
             postPromise,
             commentsPromise,
         ]);
-        // state.post = post;
-        // state.comments = comments;
-        console.log(comments);
+
         const postElement = renderPost(post, comments);
 
         root.appendChild(postElement);
     } catch (err) {
         console.error(err);
-
-        // const errorElement = err.message.includes('HTTP error! status: 404')
-        //     ? fourOhFour(postId)
-        //     : otherError(postId);
-
-        // root.appendChild(errorElement);
     }
 };
